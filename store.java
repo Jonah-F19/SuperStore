@@ -3,24 +3,27 @@ import java.util.ArrayList;
 public class store {  
     static items[] watchs = new items[3];
      static  items[] vehicles = new items[4];
-    static items[] groceries = new items[3];
+    static items[] groceries = new items[6];
    static  ArrayList<Integer> owned = new ArrayList<Integer>();
     static Scanner sc = new Scanner(System.in);
     static player p;
     static boolean gameOver;
     public static void main(String[] args) throws Exception{
-        watchs[0] = new items("Rose gold rolex", 65000, 100);
-        watchs[1] = new items("Hublot", 10000, 95);
-        watchs[2] = new items("Walmart watch", 15, 60);
+        watchs[0] = new Watch("Rose gold rolex", 65000, 100, true);
+        watchs[1] = new Watch("Hublot", 10000, 95,true);
+        watchs[2] = new Watch("Walmart watch", 15, 60,false);
        
-        vehicles[0] = new items("Honda Accord", 30000, 75);
-        vehicles[1] = new items("Hennessy venom f5", 3500000, 100);
-        vehicles[2] = new items("inflatable boat", 1500, 65);
-        vehicles[3] = new items("yacht", 2500000, 90);
+        vehicles[0] = new Vehicle("Honda Accord", 30000, 75, true);
+        vehicles[1] = new Vehicle("Hennessy venom f5", 3500000, 100,true);
+        vehicles[2] = new Vehicle("inflatable boat", 1500, 65,false);
+        vehicles[3] = new Vehicle("yacht", 2500000, 90,false);
        
-        groceries[0] = new items("Egg", 8, 80);
-        groceries[1] = new items("milk", 6, 80);
-        groceries[2] = new items("apple", 2, 97);
+        groceries[0] = new Groceries("2 dozen Eggs", 16, 80,true);
+        groceries[1] = new Groceries("2 gallons of milk", 12, 80,true);
+        groceries[2] = new Groceries("6 apples", 4, 97,true);
+        groceries[3] = new Groceries("1 dozen Eggs", 8, 80,false);
+        groceries[4] = new Groceries("gallon of milk", 6, 80,false);
+        groceries[5] = new Groceries("apple", 2, 97,false);
 
     
         gameIntro();
@@ -29,7 +32,7 @@ public class store {
         System.out.println("Today we have 10 items in stock ranging from cars, to watches, all the way to groceries.");
         store();
         if (p.money < 2){
-            System.out.println("Your game has ended due to you not having enough money to buy the cheapest item, an egg.");
+            System.out.println("Your game has ended due to you not having enough money to buy the cheapest item, a dozen eggs.");
         }
         System.out.println("Thank you for playing. You bought a total of " + owned.size() + "items.");
         System.out.println("Including "); 
@@ -117,23 +120,23 @@ public static void buy(){
         System.out.println(i+4 + ". " + vehicles[i].name + ". The price is " + vehicles[i].price);
         vehicles[i].indexvalue = i+4;
     }
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 6; i++){
         System.out.println(i+8 + ". " + groceries[i].name + ". The price is " + groceries[i].price);
         groceries[i].indexvalue = i+8;
     }
-    System.out.println("which would you like to buy. If you have changed your mind and would like to sell please enter 11");
+    System.out.println("which would you like to buy. If you have changed your mind and would like to sell please enter 14");
     int item = 0;
-    while (item > 11 || item < 1) {
+    while (item > 14 || item < 1) {
         if (sc.hasNextInt()) {
             item = sc.nextInt();
             if (item > 11 || item < 1) {
-                System.out.println("You input a incorrect number, please input 1 or 2");
+                System.out.println("You input a incorrect number, please input a number between 1 and 14");
             }
         } else {
-            System.out.println("You did not enter a number, please input 1 or 2");
+            System.out.println("You did not enter a number, please input a  number between 1 and 14");
             sc.next();
         }
-    if (item == 11){
+    if (item == 14){
         sell();
     }else{
         items choice = getItemAtIndex(item);
@@ -144,6 +147,7 @@ public static void buy(){
         owned.add(item);
         }
         System.out.println("Thank you for buying a(n) " + choice.name);
+        choice.description();
         System.out.println("You now have " + p.money + " left.");
      }
     }
@@ -160,7 +164,7 @@ public static items getItemAtIndex(int index) {
             return vehicles[i];
         }
     }
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 6; i++){
         if (groceries[i].indexvalue == index){
             return groceries[i];
         }
