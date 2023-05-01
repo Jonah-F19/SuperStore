@@ -1,12 +1,12 @@
 public class items {
     String name;
     String description;
-    int price;
-    int resaleValue;
+    double price;
+    double resaleValue;
     int indexvalue;
 
 
-    items(String name, int price, int resaleValue){
+    items(String name, double price, double resaleValue){
         this.name = name;
         this.price = price;
         this.resaleValue = resaleValue;  
@@ -20,6 +20,7 @@ public class items {
 
     public void setDescription(String specificDescription){
         description = specificDescription;
+        System.out.println(specificDescription);
     }
     public void description(){
         setDescription("Thank you for buying this item");
@@ -28,7 +29,7 @@ public class items {
 class Watch extends items{
     private boolean fancy;
 
-    public Watch(String name, int price, int resaleValue, boolean fancy){
+    public Watch(String name, double price, double resaleValue, boolean fancy){
         super(name, price, resaleValue);
         this.fancy = fancy;
     }
@@ -45,7 +46,7 @@ class Watch extends items{
 class Vehicle extends items{
     private boolean isCar;
 
-    public Vehicle(String name, int price, int resaleValue, boolean isCar){
+    public Vehicle(String name, double price, double resaleValue, boolean isCar){
         super(name, price, resaleValue);
         this.isCar = isCar;
 
@@ -63,7 +64,7 @@ class Vehicle extends items{
 class Groceries extends items{
     private boolean servingSizelrg;
 
-    public Groceries(String name, int price, int resaleValue, boolean servingSizelrg){
+    public Groceries(String name, double price, double resaleValue, boolean servingSizelrg){
         super(name, price, resaleValue);
         this.servingSizelrg = servingSizelrg;
     }

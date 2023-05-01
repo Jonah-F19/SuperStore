@@ -9,21 +9,21 @@ public class store {
     static player p;
     static boolean gameOver;
     public static void main(String[] args) throws Exception{
-        watchs[0] = new Watch("Rose gold rolex", 65000, 100, true);
-        watchs[1] = new Watch("Hublot", 10000, 95,true);
-        watchs[2] = new Watch("Walmart watch", 15, 60,false);
+        watchs[0] = new Watch("Rose gold rolex", 65000.0, 100.0, true);
+        watchs[1] = new Watch("Hublot", 10000.0, 95.0,true);
+        watchs[2] = new Watch("Walmart watch", 15.0, 60.0,false);
        
-        vehicles[0] = new Vehicle("Honda Accord", 30000, 75, true);
-        vehicles[1] = new Vehicle("Hennessy venom f5", 3500000, 100,true);
-        vehicles[2] = new Vehicle("inflatable boat", 1500, 65,false);
-        vehicles[3] = new Vehicle("yacht", 2500000, 90,false);
+        vehicles[0] = new Vehicle("Honda Accord", 30000.0, 75.0, true);
+        vehicles[1] = new Vehicle("Hennessy venom f5", 3500000.0, 100.0,true);
+        vehicles[2] = new Vehicle("inflatable boat", 1500.0, 65.0,false);
+        vehicles[3] = new Vehicle("yacht", 2500000.0, 90.0,false);
        
-        groceries[0] = new Groceries("2 dozen Eggs", 16, 80,true);
-        groceries[1] = new Groceries("2 gallons of milk", 12, 80,true);
-        groceries[2] = new Groceries("6 apples", 4, 97,true);
-        groceries[3] = new Groceries("1 dozen Eggs", 8, 80,false);
-        groceries[4] = new Groceries("gallon of milk", 6, 80,false);
-        groceries[5] = new Groceries("apple", 2, 97,false);
+        groceries[0] = new Groceries("2 dozen Eggs", 16.0, 80.0,true);
+        groceries[1] = new Groceries("2 gallons of milk", 12.0, 80.0,true);
+        groceries[2] = new Groceries("6 apples", 4.0, 97.0,true);
+        groceries[3] = new Groceries("1 dozen Eggs", 8.0, 80.0,false);
+        groceries[4] = new Groceries("gallon of milk", 6.0, 80.0,false);
+        groceries[5] = new Groceries("apple", 2.0, 97.0,false);
 
     
         gameIntro();
@@ -83,7 +83,7 @@ public static void store(){
     }
     if (option == 1){
         buy();
-    }else{
+    }else if (option == 2){
         sell();
     }
     System.out.println("Thank you so much!!! You now own: ");
@@ -91,6 +91,9 @@ public static void store(){
         items has = getItemAtIndex(i);
         System.out.println("A(n) " + has.name);
 }
+    if (owned.size() == 0){
+        System.out.println("Nothing");
+    }
     System.out.println("Would you like to continue playing or do you want end here?");
     System.out.println("Enter 1 to continue and 2 to end");
     while (over > 2 || over < 1) {
@@ -173,7 +176,43 @@ public static items getItemAtIndex(int index) {
 }
 
 public static void sell(){
-//haven't done this yet
-System.out.println("This function is a work in progress please just use the buy function for right now");
+if (owned.size() == 0){
+    System.out.println("You cannot sell any items due to you not owning any items. Please head over to the buy function");
+} else {
+System.out.println("Hello what item would you like to sell");
+int j = 0;
+for (int i: owned){
+    j++;
+    items has = getItemAtIndex(i);
+    System.out.println(j +") A(n) " + has.name + " which you can sell for "+ has.resaleValue/100 *has.price +". AKA " + has.resaleValue + "% of its value.");
+}
+System.out.println("which would you like to sell. If you have changed your mind and would like to sell please enter 5311");
+    int item = 0;
+    while (item < owned.size() || item > 1) {
+        if (sc.hasNextInt()) {
+            item = sc.nextInt();
+            if (item > 11 || item < 1) {
+                System.out.println("You input a incorrect number, please input a number between 1 and " + owned.size());
+            }
+        } else {
+            System.out.println("You did not enter a number, please input a  number between 1 and " + owned.size());
+            sc.next();
+        }
+    if (item == 5311){
+        buy();
+    }else{
+        items choice = getItemAtIndex(owned.get(item - 1));
+        if (owned.size() == 0){
+            System.out.println("sorry you do not own any items, please go to the buy function");
+        }else {
+        p.money = p.money + choice.resaleValue/100 *choice.price;
+        owned.remove(item - 1);
+        }
+        System.out.println("Thank you for selling a(n) " + choice.name);
+        choice.description();
+        System.out.println("You now have " + p.money + " left.");
+     }
+    }
+}
 }
 }
